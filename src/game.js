@@ -1,6 +1,6 @@
-// Initialize Telegram WebApp
-const tg = window.Telegram.WebApp;
-tg.expand(); // Opens the app to full height
+// // Initialize Telegram WebApp
+// const tg = window.Telegram.WebApp;
+// tg.expand(); // Opens the app to full height
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
