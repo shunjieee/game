@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pixel Runner</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js?5"></script>
 </head>
+
 <body>
     <div id="game-container">
         <div id="ui">
             <div id="score">Score: 0</div>
         </div>
+
         <canvas id="gameCanvas"></canvas>
-        
+
         <div id="overlay" class="hidden">
             <h1>GAME OVER</h1>
             <button id="restartBtn">Play Again</button>
@@ -21,4 +24,5 @@
     </div>
     <script src="game.js"></script>
 </body>
+
 </html>
