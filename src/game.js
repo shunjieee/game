@@ -22,9 +22,12 @@ let gameSpeed = 5;
 
 let player = {
     x: canvas.width / 2,    // Horizontal Position (Center)
-    y: canvas.height - 30,  // Vertical Position (near the bottom)
+    y: canvas.height - 35,  // Vertical Position (near the bottom)
     size: 30                // Width and height of the pixel square
 };
+
+let lastTime = 0;
+let fps = 0;
 
 // Handle Input (Mouse & Touch)
 function movePlayer(e) {
@@ -51,7 +54,7 @@ canvas.addEventListener('mousemove', movePlayer);
 canvas.addEventListener('touchmove', movePlayer);
 
 // Main Game Loop
-function update() {
+function update(currentTime) {
     // Stop the loop if the player crashed
     if (gameOver) return;
 
@@ -70,9 +73,12 @@ function update() {
     // Bottom Left Point
     ctx.lineTo(player.x - player.size / 2, player.y + player.size);
     // Bottom Right Point
-    ctx.lineTo(player.x + player.size, player.y + player.size);
+    ctx.lineTo(player.x + player.size / 2, player.y + player.size);
     ctx.closePath();
     ctx.fill();
+
+    // Spawn Lanes
+
 
     // Spawn Obstacles
     if (Math.random() < 0.03) {
@@ -107,6 +113,20 @@ function update() {
             gameSpeed += 0.1; // Speed up
         }
     });
+
+    // 1. Calculate Delta Time
+    // currentTime is automatically provided by requestAnimationFrame
+    const deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
+
+    // 2. Calculate FPS (1000ms / time passed)
+    // We use a simple floor to avoid decimals
+    fps = Math.round(1000 / deltaTime);
+
+    // 3. Display the FPS on the Canvas
+    ctx.fillStyle = "white";
+    ctx.font = "16px Arial";
+    ctx.fillText(`FPS: ${fps}`, 10, 20);
 
     requestAnimationFrame(update);
 }
