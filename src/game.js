@@ -21,9 +21,9 @@ let obstacles = [];
 let gameSpeed = 5;
 
 let player = {
-    x: 135,         // Horizontal Position
-    y: 430,         // Vertical Position (near the bottom)
-    size: 30        // Width and height of the pixel square
+    x: canvas.width / 2,    // Horizontal Position (Center)
+    y: canvas.height - 30,  // Vertical Position (near the bottom)
+    size: 30                // Width and height of the pixel square
 };
 
 // Handle Input (Mouse & Touch)
@@ -35,10 +35,15 @@ function movePlayer(e) {
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
 
     // Adjust the player's X to be centered on the touch point
+    // i.e. if rect.left = 50, clientX = 150, actual = 100
     const x = clientX - rect.left;
 
     // Clamp the movement so the player can't slide off the left or right edges
-    player.x = Math.max(0, Math.min(canvas.width - player.size, x - player.size / 2));
+    const centeringPlayer = x - player.size / 2;
+    const rightWallCheck = Math.min(canvas.width - player.size, centeringPlayer);
+    const leftWallCheck = Math.max(0, rightWallCheck);
+    player.x = leftWallCheck
+    // player.x = Math.max(0, Math.min(canvas.width - player.size, x - player.size / 2));
 }
 
 // Listen for movements on the canvas
@@ -61,9 +66,9 @@ function update() {
     ctx.fillStyle = "#00FF00";
     ctx.beginPath();
     // Top Point (Middle-Top of the player area)
-    ctx.moveTo(player.x + player.size / 2, player.y);
+    ctx.moveTo(player.x, player.y);
     // Bottom Left Point
-    ctx.lineTo(player.x, player.y + player.size);
+    ctx.lineTo(player.x - player.size / 2, player.y + player.size);
     // Bottom Right Point
     ctx.lineTo(player.x + player.size, player.y + player.size);
     ctx.closePath();
